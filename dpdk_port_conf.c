@@ -109,7 +109,7 @@ static inline void dpdk_port_init(dpdk_port_conf_t *dpdk_port_conf,uint16_t port
             .mq_mode    = ETH_MQ_RX_RSS,
 			//.max_rx_pkt_len = 2000,
             .split_hdr_size = 0,
-			//.offloads = DEV_RX_OFFLOAD_JUMBO_FRAME,
+	    .offloads = DEV_RX_OFFLOAD_KEEP_CRC,
             //.offloads = DEV_RX_OFFLOAD_CRC_STRIP,//(DEV_RX_OFFLOAD_CHECKSUM |
                         // DEV_RX_OFFLOAD_CRC_STRIP),
         },
