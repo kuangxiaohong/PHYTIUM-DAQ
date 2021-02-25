@@ -4,28 +4,18 @@
 #include "stdint.h"
 
 //can get from dpdk param
-#define NB_MBUF             (8192 * 32) 
 #define NB_SOCKETS        (8)
 
 /**
- * 网口建立并初始化
+ * numa架构下为每个核和端口到其所在内存节点上分配内存
  *
- * @param 
- *   
+ * @param nb_mbuf
+ *   分配mbuf个数
  * @return
- *   
+ *   0 表示成功，其它为失败
  */
-void dpdk_port_setup(void);
+int dpdk_init_mem(uint32_t nb_mbuf);
 
-/**
- * 网口启动收包
- *
- * @param 
- *   
- * @return
- *   
- */
-void dpdk_port_start(void);
 
 /**
  * 获取某网口的队列数
@@ -47,18 +37,7 @@ int dpdk_get_port_queue_num(int port_id);
  */
 int dpdk_get_port_num(void);
 
-/**
- *每调用一次返回一个网口和队列，用于多线程处理
- *
- * @param  *out_port
- * 	网口返回值
- * @param  *out_queue
- * 	队列返回值
- *   
- * @return 
- *   
- */
-int dpdk_get_port_and_queue(uint16_t *out_port,uint16_t *out_queue);
+
 
 /**
  *打印所有网口信息

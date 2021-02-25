@@ -13,6 +13,7 @@
 #include <strings.h>
 #include <stdlib.h>
 #include <rte_cfgfile.h>
+#include <rte_ethdev.h>
 
 
 //#define DEBUG_PARAM 
@@ -34,24 +35,23 @@ static int dpdk_port_num = 0;
 /**
  *dpdk配置文件解析
  *
- * @param  
+ * @param  config_file_path 配置文件路径
  * 	 
  * @return 0成功，其它失败
  *   
  */
-int dpdk_conf_parse(void)
+int dpdk_conf_parse(char *config_file_path)
 {
 	int i,j;
 	struct rte_cfgfile *file = NULL;
 	struct rte_cfgfile_entry entries[MAX_EAL_ENTRY];
 
-	file = rte_cfgfile_load("dpdk.cfg", 0);
+	file = rte_cfgfile_load(config_file_path, 0);
 
 	if (file == NULL){
-		printf("rte_cfgfile_load:%s\n","dpdk.cfg");
+		printf("rte_cfgfile_load failed!\n");
 		return -1;
-	}
-		
+	}	
 
 	/* get section name EAL */
 	if (rte_cfgfile_has_section(file, "EAL")) {

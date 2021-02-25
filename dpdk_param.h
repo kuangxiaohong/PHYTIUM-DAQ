@@ -12,12 +12,12 @@ typedef struct dpdk_port_conf
 /**
  *dpdk配置文件解析
  *
- * @param  
+ * @param  config_file_path 配置文件路径
  * 	 
  * @return 0成功，其它失败
  *   
  */
-int dpdk_conf_parse(void);
+int dpdk_conf_parse(char *config_file_path);
 
 /**
  *dpdk配置参数个数获取

@@ -47,7 +47,7 @@ static struct rte_mempool *pktmbuf_pool[NB_SOCKETS] = {NULL};
  * @return
  *   0 表示成功，其它为失败
  */
-static int init_mem(uint32_t nb_mbuf)
+int dpdk_init_mem(uint32_t nb_mbuf)
 {
 	int socketid,i;
 	unsigned lcore_id;
@@ -327,40 +327,6 @@ void dpdk_port_setup_proc(void)
 	return;
 }
 
-/**
- * 网口启动收包
- *
- * @param 
- *   
- * @return
- *   
- */
-void dpdk_port_start(void)
-{
-	int port_id,ret;
-	
-	RTE_ETH_FOREACH_DEV(port_id) {
-	/* Start device */
-	//printf("dpdk_port_start: port_id:%d\n",port_id);
-	ret = rte_eth_dev_start(port_id);
-	if (ret < 0)
-		rte_exit(EXIT_FAILURE,"rte_eth_dev_start: err=%d, port=%d\n",ret, port_id);
-	}
-}
-
-/**
- * 网口建立并初始化
- *
- * @param 
- *   
- * @return
- *   
- */
-void dpdk_port_setup(void)
-{
-	init_mem(NB_MBUF);
-	dpdk_port_setup_proc();
-}
 
 /**
  * 获取某网口的队列数
@@ -386,48 +352,6 @@ int dpdk_get_port_queue_num(int port_id)
 int dpdk_get_port_num(void)
 {
 	return port_cnt;
-}
-
-/**
- *每调用一次返回一个网口和队列，用于多线程处理
- *
- * @param  *out_port
- * 	网口返回值
- * @param  *out_queue
- * 	队列返回值
- *   
- * @return 
- *   
- */
-int dpdk_get_port_and_queue(uint16_t *out_port,uint16_t *out_queue)
-{
-	static uint8_t first_time = 1;
-	static uint16_t port = 0;
-	static uint16_t queue = 0;
-
-	int nr_ports = dpdk_get_port_num();
-	int nr_queues  = dpdk_get_port_queue_num(port);
-
-	if (first_time == 1)
-	{
-		first_time = 0;
-		goto complete;
-	}
-	
-	if ((queue + 1) < nr_queues)
-		queue += 1;
-	else {
-		port += 1;
-		queue = 0;
-	}
-
-	if(port >= nr_ports)
-		return -1;
-complete:
-	*out_port = port;
-	*out_queue = queue;
-	return 0;
-
 }
 
 /**

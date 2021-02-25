@@ -1,1 +1,4 @@
 this project is the sample for using dpdk,it has successfully running on phytium cpu (ft2000+/d2000)
+
+install:make
+
