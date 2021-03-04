@@ -5,7 +5,6 @@ typedef struct dpdk_port_conf
 {
 	int queue_num;
 	int mtu;
-	int rss_tuple;
 	int jumbo;
 }dpdk_port_conf_t;
 

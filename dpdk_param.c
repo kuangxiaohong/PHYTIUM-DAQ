@@ -97,8 +97,6 @@ int dpdk_conf_parse(char *config_file_path)
 			
 					if (strcasecmp("mtu", entries[j].name) == 0)
 						dpdk_ports[i].mtu = atoi(entries[j].value);
-					else if (strcasecmp("rss-tuple", entries[j].name) == 0)
-						dpdk_ports[i].rss_tuple = atoi(entries[j].value);
 					else if (strcasecmp("jumbo", entries[j].name) == 0)
 						dpdk_ports[i].jumbo = (strcasecmp(entries[j].value, "yes") == 0) ? 1 : 0;
 					else if (strcasecmp("queue-num", entries[j].name) == 0)
@@ -179,7 +177,6 @@ dpdk_port_conf_t* dpdk_get_port_conf(int port_id)
 	}
 	
 	DEBUG("dpdk port_id(%d) port_queue_num(%d)\n",port_id,dpdk_ports[port_id].queue_num);	
-	DEBUG("dpdk port_id(%d) port_rss_tuple(%d)\n",port_id,dpdk_ports[port_id].rss_tuple);
 	DEBUG("dpdk port_id(%d) port_mtu(%d)\n",port_id,dpdk_ports[port_id].mtu);	
 	DEBUG("dpdk port_id(%d) port_jumbo(%s)\n",port_id,(dpdk_ports[port_id].jumbo == 1) ? "yes" : "no" );
 	
