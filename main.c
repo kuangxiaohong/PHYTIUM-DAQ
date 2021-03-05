@@ -10,10 +10,9 @@
 #define MAX_PKT_BURST 		(32)
 #define PREFETCH_OFFSET	 	(3)
 #define DPDK_CFG_PATH 		"./dpdk.cfg"
-#define MAX_CORE  (8)
+#define MAX_CORE  (64)
 #define MAX_PORT  (2)
 #define PERF_STAT (1) 
-#define FORWARD (1)
 #define LINE "-----------------------------------------------------------------"
 struct dpdk_stat_t
 {
@@ -69,6 +68,8 @@ void print_stat()
 			statics_queue[cpu].tx_packets += dpdk_stat[cpu][inf].tx_packets;
 			statics_queue[cpu].dropped_packets += dpdk_stat[cpu][inf].dropped_packets;
 		}
+
+		if (statics_queue[cpu].rx_packets || statics_queue[cpu].tx_packets || statics_queue[cpu].dropped_packets )
 		printf("cpu:%d rx_packets:%ld tx_packets:%ld drop:%ld\n",cpu,statics_queue[cpu].rx_packets,statics_queue[cpu].tx_packets,statics_queue[cpu].dropped_packets);
 
 	}
